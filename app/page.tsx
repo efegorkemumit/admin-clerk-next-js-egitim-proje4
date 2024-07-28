@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import AddaCategory from "@/components/AddACategory";
 
 export default function Home() {
 
@@ -50,9 +51,7 @@ export default function Home() {
   return (
   <div className="container mx-auto">
     <h1 className="text-3xl mt-4 font-semibold mb-8">Categories</h1>
-    <Button>
-      Add a Category
-    </Button>
+   <AddaCategory fetchCategories={fetchcategories}/>
 
     <Table>
       <TableCaption>A list of your recent categorys.</TableCaption>

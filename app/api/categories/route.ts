@@ -16,3 +16,18 @@ export async function GET(request: NextRequest) {
     }
     
 }
+
+export async function POST(request: NextRequest) {
+
+    const {title, description}= await request.json();
+
+    try {
+        const newCategory = await prisma.category.create({data:{title, description}})
+        return NextResponse.json(newCategory, {status:200});
+
+    } catch (error) {
+        return NextResponse.json({error:"Failed"}, {status:500});
+
+    }
+    
+}
