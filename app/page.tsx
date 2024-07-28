@@ -25,10 +25,24 @@ export default function Home() {
       setcategories(response.data)
       
     } catch (error) {
-      
+      console.error('Failed to fetchcategories', error);
+
     }
     
   }
+
+  async function deleteCategory(id:string) {
+    try {
+      await axios.delete(`/api/categories/${id}`)
+      fetchcategories();
+      
+    } catch (error) {
+      console.error('Failed to delete category:', error);
+
+    }
+    
+  }
+
 
   useEffect(()=>{
     fetchcategories();
@@ -52,13 +66,13 @@ export default function Home() {
       </TableHeader>
       <TableBody>
         {categories.map((category) => (
-          <TableRow key={category.category}>
+          <TableRow key={category.id}>
             <TableCell className="font-medium">{category.id}</TableCell>
             <TableCell>{category.title}</TableCell>
             <TableCell>{category.description}</TableCell>
             <TableCell className="text-right flex flex-row gap-2">
               <Button>Edit</Button>
-              <Button variant={"destructive"}>Delete</Button>
+              <Button onClick={()=>deleteCategory(category.id)} variant={"destructive"}>Delete</Button>
 
 
             </TableCell>
