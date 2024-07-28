@@ -15,10 +15,14 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import AddaCategory from "@/components/AddACategory";
+import UpdateCategory from "@/components/UpdateCategory";
 
 export default function Home() {
 
   const [categories, setcategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
 
   async function fetchcategories() {
     try {
@@ -53,6 +57,16 @@ export default function Home() {
     <h1 className="text-3xl mt-4 font-semibold mb-8">Categories</h1>
    <AddaCategory fetchCategories={fetchcategories}/>
 
+{selectedCategory && isUpdateModalOpen&&(
+  <UpdateCategory
+  category={selectedCategory}
+  fetchCategories={fetchcategories}
+  isOpen={isUpdateModalOpen}
+  onClose={()=>setIsUpdateModalOpen(false)}
+  
+  />
+)}
+
     <Table>
       <TableCaption>A list of your recent categorys.</TableCaption>
       <TableHeader>
@@ -70,7 +84,7 @@ export default function Home() {
             <TableCell>{category.title}</TableCell>
             <TableCell>{category.description}</TableCell>
             <TableCell className="text-right flex flex-row gap-2">
-              <Button>Edit</Button>
+              <Button onClick={()=>{setSelectedCategory(category); setIsUpdateModalOpen(true)}}>Edit</Button>
               <Button onClick={()=>deleteCategory(category.id)} variant={"destructive"}>Delete</Button>
 
 
